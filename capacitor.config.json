@@ -1,0 +1,16 @@
+{
+  "appId": "app.lovable.d3080cb9440a40a2bd59ce6de77ec82a",
+  "appName": "irfan-divine-dialogue",
+  "webDir": "dist",
+  "server": {
+    "url": "https://d3080cb9-440a-40a2-bd59-ce6de77ec82a.lovableproject.com?forceHideBadge=true",
+    "cleartext": true
+  },
+  "bundledWebRuntime": false,
+  "ios": {
+    "contentInset": "always"
+  },
+  "android": {
+    "allowMixedContent": true
+  }
+}
