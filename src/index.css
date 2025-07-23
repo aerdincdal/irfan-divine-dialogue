@@ -196,4 +196,9 @@
     0%, 100% { box-shadow: 0 0 20px hsl(45 100% 60% / 0.3); }
     50% { box-shadow: 0 0 40px hsl(45 100% 60% / 0.6); }
   }
+
+  /* Gradient Utilities */
+  .bg-gradient-radial {
+    background: radial-gradient(circle, var(--tw-gradient-stops));
+  }
 }

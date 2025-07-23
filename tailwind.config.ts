@@ -52,7 +52,13 @@ export default {
 				card: {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
-				},
+			},
+			fontFamily: {
+				'arabic': ['Amiri', 'serif'],
+				'noto-arabic': ['Noto Sans Arabic', 'sans-serif'],
+				'scheherazade': ['Scheherazade New', 'serif'],
+				'sans': ['Inter', 'system-ui', 'sans-serif'],
+			},
 				glass: {
 					DEFAULT: 'hsl(var(--glass))',
 					border: 'hsl(var(--glass-border))',
