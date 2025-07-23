@@ -2,41 +2,70 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* İrfan - Islamic AI Assistant Design System */
+/* Liquid Glass Aesthetic with Islamic Elegance */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Core Islamic Black Theme */
+    --background: 0 0% 0%;
+    --foreground: 0 0% 100%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    /* Glass Surfaces */
+    --glass: 0 0% 0%;
+    --glass-border: 0 0% 15%;
+    --glass-foreground: 0 0% 95%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    /* Card Components */
+    --card: 0 0% 3%;
+    --card-foreground: 0 0% 95%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Popover & Overlays */
+    --popover: 0 0% 0%;
+    --popover-foreground: 0 0% 100%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    /* Islamic Gold Accent */
+    --primary: 45 100% 60%;
+    --primary-foreground: 0 0% 0%;
+    --primary-glow: 45 100% 70%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    /* Secondary Glass Elements */
+    --secondary: 0 0% 8%;
+    --secondary-foreground: 0 0% 90%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    /* Muted Glass */
+    --muted: 0 0% 5%;
+    --muted-foreground: 0 0% 60%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    /* Accent Amber */
+    --accent: 45 80% 55%;
+    --accent-foreground: 0 0% 0%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    /* Destructive */
+    --destructive: 0 70% 50%;
+    --destructive-foreground: 0 0% 100%;
 
-    --radius: 0.5rem;
+    /* Borders & Inputs */
+    --border: 0 0% 15%;
+    --input: 0 0% 8%;
+    --ring: 45 100% 60%;
+
+    /* Glass Border Radius */
+    --radius: 1rem;
+
+    /* Islamic Gold Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(45 100% 60%), hsl(45 100% 70%));
+    --gradient-glass: linear-gradient(145deg, hsl(0 0% 0% / 0.6), hsl(0 0% 5% / 0.8));
+    --gradient-glow: radial-gradient(circle, hsl(45 100% 60% / 0.3), transparent);
+
+    /* Glass Effects */
+    --glass-backdrop: backdrop-blur(16px);
+    --glass-shadow: 0 8px 32px hsl(0 0% 0% / 0.8);
+    --glow-shadow: 0 0 30px hsl(45 100% 60% / 0.4);
+
+    /* Animation Timing */
+    --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
 
     --sidebar-background: 0 0% 98%;
 
@@ -100,6 +129,71 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-sans;
+    overflow-x: hidden;
+  }
+}
+
+@layer components {
+  /* Glass Morphism Components */
+  .glass-panel {
+    @apply bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-xl border border-white/20 rounded-3xl;
+    box-shadow: var(--glass-shadow);
+  }
+
+  .glass-button {
+    @apply bg-gradient-to-r from-primary/80 to-primary backdrop-blur-sm rounded-2xl transition-all duration-300;
+    box-shadow: var(--glow-shadow);
+  }
+
+  .glass-button:hover {
+    @apply scale-105;
+    box-shadow: 0 0 40px hsl(45 100% 60% / 0.6);
+  }
+
+  .glass-input {
+    @apply bg-input/50 backdrop-blur-xl border border-border/50 rounded-2xl;
+    transition: var(--transition-smooth);
+  }
+
+  .glass-input:focus {
+    @apply ring-2 ring-primary/50 border-primary/50;
+    box-shadow: 0 0 20px hsl(45 100% 60% / 0.3);
+  }
+
+  /* Chat Bubble Styles */
+  .chat-bubble-user {
+    @apply bg-gradient-to-r from-primary to-primary-glow text-primary-foreground rounded-3xl rounded-br-lg px-4 py-3 max-w-[80%] ml-auto;
+    box-shadow: var(--glow-shadow);
+  }
+
+  .chat-bubble-ai {
+    @apply glass-panel text-glass-foreground rounded-3xl rounded-bl-lg px-4 py-3 max-w-[85%];
+  }
+
+  /* Shimmer Animation */
+  .shimmer {
+    background: linear-gradient(90deg, transparent, hsl(45 100% 60% / 0.3), transparent);
+    background-size: 200% 100%;
+    animation: shimmer 2s infinite;
+  }
+
+  @keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+
+  /* Glow Effects */
+  .glow-text {
+    text-shadow: 0 0 20px hsl(45 100% 60% / 0.5);
+  }
+
+  .pulse-glow {
+    animation: pulse-glow 3s ease-in-out infinite;
+  }
+
+  @keyframes pulse-glow {
+    0%, 100% { box-shadow: 0 0 20px hsl(45 100% 60% / 0.3); }
+    50% { box-shadow: 0 0 40px hsl(45 100% 60% / 0.6); }
   }
 }
