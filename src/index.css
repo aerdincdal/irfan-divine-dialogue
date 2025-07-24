@@ -66,6 +66,9 @@
     /* Animation Timing */
     --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-bounce: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+    
+    /* Arabic Font */
+    --font-arabic: 'Amiri', 'Arabic UI Display', serif;
 
     --sidebar-background: 0 0% 98%;
 
@@ -131,6 +134,23 @@
   body {
     @apply bg-background text-foreground font-sans;
     overflow-x: hidden;
+    /* Prevent mobile pull-to-refresh and bouncing */
+    overscroll-behavior: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  /* Mobile app styling */
+  html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    position: fixed;
+    width: 100%;
+  }
+  
+  #root {
+    height: 100vh;
+    overflow: hidden;
   }
 }
 
@@ -200,5 +220,27 @@
   /* Gradient Utilities */
   .bg-gradient-radial {
     background: radial-gradient(circle, var(--tw-gradient-stops));
+  }
+
+  /* Arabic Font Class */
+  .font-arabic {
+    font-family: var(--font-arabic);
+    font-weight: 400;
+    line-height: 1.6;
+  }
+  
+  /* Mobile safe areas */
+  .safe-top {
+    padding-top: env(safe-area-inset-top);
+  }
+  
+  .safe-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  
+  /* Mobile viewport fixes */
+  .mobile-vh {
+    height: 100vh;
+    height: -webkit-fill-available;
   }
 }

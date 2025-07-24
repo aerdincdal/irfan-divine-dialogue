@@ -35,6 +35,9 @@ export const WelcomePrompts = ({ onSelectPrompt }: WelcomePromptsProps) => {
         <h1 className="text-3xl font-bold glow-text">
           İrfan'a Hoş Geldiniz
         </h1>
+        <div className="text-4xl font-arabic text-primary mb-2" dir="rtl">
+          بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ
+        </div>
         <p className="text-muted-foreground text-lg max-w-md">
           İslami bilgiler için yapay zeka destekli rehberiniz
         </p>

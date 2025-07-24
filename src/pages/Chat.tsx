@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Header } from "@/components/Header";
 import { ChatBubble } from "@/components/ChatBubble";
 import { ChatInput } from "@/components/ChatInput";
@@ -6,6 +6,8 @@ import { WelcomePrompts } from "@/components/WelcomePrompts";
 import { ChatHistory } from "@/components/ChatHistory";
 import { Settings } from "@/components/Settings";
 import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/hooks/useAuth";
+import { useDatabase } from "@/hooks/useDatabase";
 import { islamicApiService } from "@/services/islamicApi";
 
 interface Message {
@@ -21,7 +23,12 @@ export default function Chat() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [currentView, setCurrentView] = useState<ChatView>('chat');
+  const [currentSessionId, setCurrentSessionId] = useState<string | null>(null);
+  const [userProfile, setUserProfile] = useState<any>(null);
+  
   const { toast } = useToast();
+  const { user, signOut } = useAuth();
+  const database = useDatabase(user?.id);
 
   const generateResponse = async (userMessage: string): Promise<string> => {
     try {
@@ -44,6 +51,27 @@ export default function Chat() {
     }
   };
 
+  useEffect(() => {
+    if (user) {
+      loadUserProfile();
+    }
+  }, [user]);
+
+  const loadUserProfile = async () => {
+    if (!user) return;
+    const profile = await database.getUserProfile();
+    setUserProfile(profile);
+  };
+
+  const createNewSession = async (firstMessage: string): Promise<string | null> => {
+    if (!user) return null;
+    
+    const title = firstMessage.slice(0, 50) + (firstMessage.length > 50 ? '...' : '');
+    const preview = firstMessage.slice(0, 100);
+    
+    return await database.createChatSession(title, preview);
+  };
+
   const handleSendMessage = async (text: string) => {
     const userMessage: Message = {
       id: Date.now().toString(),
@@ -59,6 +87,18 @@ export default function Chat() {
     setIsLoading(true);
 
     try {
+      // Create new session if this is the first message
+      let sessionId = currentSessionId;
+      if (!sessionId && user) {
+        sessionId = await createNewSession(text);
+        setCurrentSessionId(sessionId);
+      }
+
+      // Save user message to database
+      if (sessionId && user) {
+        await database.saveMessage(sessionId, text, 'user');
+      }
+
       const response = await generateResponse(text);
       
       const aiMessage: Message = {
@@ -72,6 +112,11 @@ export default function Chat() {
       };
 
       setMessages(prev => [...prev, aiMessage]);
+
+      // Save AI message to database
+      if (sessionId && user) {
+        await database.saveMessage(sessionId, response, 'ai');
+      }
     } catch (error) {
       toast({
         title: "Hata",
@@ -83,26 +128,27 @@ export default function Chat() {
     }
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem('irfan_user_authenticated');
-    window.location.reload();
+  const handleLogout = async () => {
+    await signOut();
   };
 
-  const saveCurrentChat = () => {
-    if (messages.length > 0) {
-      const chatSession = {
-        id: Date.now().toString(),
-        title: messages[0]?.text?.slice(0, 50) + '...' || 'Yeni Sohbet',
-        preview: messages[0]?.text || '',
-        timestamp: 'Şimdi',
-        messageCount: messages.length,
-        messages: messages
-      };
-      
-      const existingHistory = JSON.parse(localStorage.getItem('irfan_chat_history') || '[]');
-      const updatedHistory = [chatSession, ...existingHistory];
-      localStorage.setItem('irfan_chat_history', JSON.stringify(updatedHistory));
-    }
+  const loadChatSession = async (sessionId: string) => {
+    if (!user) return;
+    
+    const sessionMessages = await database.getChatMessages(sessionId);
+    const convertedMessages: Message[] = sessionMessages.map(msg => ({
+      id: msg.id,
+      text: msg.content,
+      type: msg.message_type,
+      timestamp: new Date(msg.created_at).toLocaleTimeString('tr-TR', { 
+        hour: '2-digit', 
+        minute: '2-digit' 
+      })
+    }));
+    
+    setMessages(convertedMessages);
+    setCurrentSessionId(sessionId);
+    setCurrentView('chat');
   };
 
   // Render different views
@@ -110,10 +156,7 @@ export default function Chat() {
     return (
       <ChatHistory 
         onBack={() => setCurrentView('chat')}
-        onSelectChat={(chatId) => {
-          // Load selected chat and return to chat view
-          setCurrentView('chat');
-        }}
+        onSelectChat={loadChatSession}
       />
     );
   }
@@ -123,17 +166,15 @@ export default function Chat() {
       <Settings 
         onBack={() => setCurrentView('chat')}
         onLogout={handleLogout}
+        userProfile={userProfile}
       />
     );
   }
 
   return (
-    <div className="flex flex-col h-screen bg-background">
+    <div className="flex flex-col h-screen bg-background mobile-vh safe-top safe-bottom">
       <Header 
-        onOpenHistory={() => {
-          saveCurrentChat();
-          setCurrentView('history');
-        }}
+        onOpenHistory={() => setCurrentView('history')}
         onOpenMenu={() => setCurrentView('settings')}
       />
       

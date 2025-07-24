@@ -12,9 +12,7 @@ import {
   FileText, 
   LogOut, 
   ExternalLink,
-  Link,
-  Trash2,
-  Save
+  Trash2
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import irfanLogo from "@/assets/irfan-logo.png";
@@ -22,25 +20,16 @@ import irfanLogo from "@/assets/irfan-logo.png";
 interface SettingsProps {
   onBack: () => void;
   onLogout?: () => void;
+  userProfile?: {
+    email: string;
+    display_name: string;
+  };
 }
 
-export const Settings = ({ onBack, onLogout }: SettingsProps) => {
-  const [swaggerEndpoint, setSwaggerEndpoint] = useState(
-    localStorage.getItem('irfan_swagger_endpoint') || ''
-  );
-  const [userEmail] = useState(
-    localStorage.getItem('irfan_user_email') || 'demo@irfan.com'
-  );
+export const Settings = ({ onBack, onLogout, userProfile }: SettingsProps) => {
   const [feedback, setFeedback] = useState('');
   const { toast } = useToast();
 
-  const saveSwaggerEndpoint = () => {
-    localStorage.setItem('irfan_swagger_endpoint', swaggerEndpoint);
-    toast({
-      title: "Endpoint Kaydedildi",
-      description: "Swagger endpoint başarıyla güncellendi."
-    });
-  };
 
   const clearAllData = () => {
     localStorage.clear();
@@ -62,12 +51,6 @@ export const Settings = ({ onBack, onLogout }: SettingsProps) => {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem('irfan_user_authenticated');
-    localStorage.removeItem('irfan_user_email');
-    toast({
-      title: "Çıkış Yapıldı",
-      description: "Güvenle çıkış yaptınız."
-    });
     onLogout?.();
   };
 
@@ -114,7 +97,19 @@ export const Settings = ({ onBack, onLogout }: SettingsProps) => {
                 <Input
                   id="email"
                   type="email"
-                  value={userEmail}
+                  value={userProfile?.email || ''}
+                  disabled
+                  className="mt-1 bg-muted/20"
+                />
+              </div>
+              <div>
+                <Label htmlFor="display_name" className="text-sm font-medium text-muted-foreground">
+                  Görünen Ad
+                </Label>
+                <Input
+                  id="display_name"
+                  type="text"
+                  value={userProfile?.display_name || ''}
                   disabled
                   className="mt-1 bg-muted/20"
                 />
@@ -122,40 +117,6 @@ export const Settings = ({ onBack, onLogout }: SettingsProps) => {
             </div>
           </div>
 
-          {/* API Configuration */}
-          <div className="glass-panel p-6 space-y-4">
-            <div className="flex items-center gap-3 mb-4">
-              <Link className="w-5 h-5 text-primary" />
-              <h2 className="text-lg font-semibold">API Yapılandırması</h2>
-            </div>
-            
-            <div className="space-y-4">
-              <div>
-                <Label htmlFor="swagger" className="text-sm font-medium text-muted-foreground">
-                  Swagger Endpoint URL
-                </Label>
-                <div className="flex gap-2 mt-1">
-                  <Input
-                    id="swagger"
-                    type="url"
-                    placeholder="https://api.example.com/swagger.json"
-                    value={swaggerEndpoint}
-                    onChange={(e) => setSwaggerEndpoint(e.target.value)}
-                    className="flex-1"
-                  />
-                  <Button
-                    onClick={saveSwaggerEndpoint}
-                    className="glass-button shrink-0"
-                  >
-                    <Save className="w-4 h-4" />
-                  </Button>
-                </div>
-                <p className="text-xs text-muted-foreground mt-1">
-                  İslami bilgiler API'si için Swagger endpoint'inizi girin
-                </p>
-              </div>
-            </div>
-          </div>
 
           {/* Feedback Section */}
           <div className="glass-panel p-6 space-y-4">
