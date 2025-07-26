@@ -16,28 +16,88 @@ export type Database = {
     Tables: {
       chat_sessions: {
         Row: {
+          conversation_type: string | null
           created_at: string
           id: string
           preview: string | null
+          security_level: string | null
           title: string
           updated_at: string
           user_id: string
         }
         Insert: {
+          conversation_type?: string | null
           created_at?: string
           id?: string
           preview?: string | null
+          security_level?: string | null
           title: string
           updated_at?: string
           user_id: string
         }
         Update: {
+          conversation_type?: string | null
           created_at?: string
           id?: string
           preview?: string | null
+          security_level?: string | null
           title?: string
           updated_at?: string
           user_id?: string
+        }
+        Relationships: []
+      }
+      content_filters: {
+        Row: {
+          blocked: boolean | null
+          created_at: string | null
+          filter_result: Json
+          id: string
+          message: string
+          user_id: string
+        }
+        Insert: {
+          blocked?: boolean | null
+          created_at?: string | null
+          filter_result: Json
+          id?: string
+          message: string
+          user_id: string
+        }
+        Update: {
+          blocked?: boolean | null
+          created_at?: string | null
+          filter_result?: Json
+          id?: string
+          message?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      document_embeddings: {
+        Row: {
+          chunk_text: string
+          created_at: string | null
+          document_name: string
+          embedding: string | null
+          id: string
+          metadata: Json | null
+        }
+        Insert: {
+          chunk_text: string
+          created_at?: string | null
+          document_name: string
+          embedding?: string | null
+          id?: string
+          metadata?: Json | null
+        }
+        Update: {
+          chunk_text?: string
+          created_at?: string | null
+          document_name?: string
+          embedding?: string | null
+          id?: string
+          metadata?: Json | null
         }
         Relationships: []
       }
@@ -78,26 +138,35 @@ export type Database = {
       }
       profiles: {
         Row: {
+          avatar_url: string | null
           created_at: string
           display_name: string | null
           email: string | null
           id: string
+          provider: string | null
+          provider_id: string | null
           updated_at: string
           user_id: string
         }
         Insert: {
+          avatar_url?: string | null
           created_at?: string
           display_name?: string | null
           email?: string | null
           id?: string
+          provider?: string | null
+          provider_id?: string | null
           updated_at?: string
           user_id: string
         }
         Update: {
+          avatar_url?: string | null
           created_at?: string
           display_name?: string | null
           email?: string | null
           id?: string
+          provider?: string | null
+          provider_id?: string | null
           updated_at?: string
           user_id?: string
         }
@@ -108,7 +177,98 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      binary_quantize: {
+        Args: { "": string } | { "": unknown }
+        Returns: unknown
+      }
+      halfvec_avg: {
+        Args: { "": number[] }
+        Returns: unknown
+      }
+      halfvec_out: {
+        Args: { "": unknown }
+        Returns: unknown
+      }
+      halfvec_send: {
+        Args: { "": unknown }
+        Returns: string
+      }
+      halfvec_typmod_in: {
+        Args: { "": unknown[] }
+        Returns: number
+      }
+      hnsw_bit_support: {
+        Args: { "": unknown }
+        Returns: unknown
+      }
+      hnsw_halfvec_support: {
+        Args: { "": unknown }
+        Returns: unknown
+      }
+      hnsw_sparsevec_support: {
+        Args: { "": unknown }
+        Returns: unknown
+      }
+      hnswhandler: {
+        Args: { "": unknown }
+        Returns: unknown
+      }
+      ivfflat_bit_support: {
+        Args: { "": unknown }
+        Returns: unknown
+      }
+      ivfflat_halfvec_support: {
+        Args: { "": unknown }
+        Returns: unknown
+      }
+      ivfflathandler: {
+        Args: { "": unknown }
+        Returns: unknown
+      }
+      l2_norm: {
+        Args: { "": unknown } | { "": unknown }
+        Returns: number
+      }
+      l2_normalize: {
+        Args: { "": string } | { "": unknown } | { "": unknown }
+        Returns: unknown
+      }
+      sparsevec_out: {
+        Args: { "": unknown }
+        Returns: unknown
+      }
+      sparsevec_send: {
+        Args: { "": unknown }
+        Returns: string
+      }
+      sparsevec_typmod_in: {
+        Args: { "": unknown[] }
+        Returns: number
+      }
+      vector_avg: {
+        Args: { "": number[] }
+        Returns: string
+      }
+      vector_dims: {
+        Args: { "": string } | { "": unknown }
+        Returns: number
+      }
+      vector_norm: {
+        Args: { "": string }
+        Returns: number
+      }
+      vector_out: {
+        Args: { "": string }
+        Returns: unknown
+      }
+      vector_send: {
+        Args: { "": string }
+        Returns: string
+      }
+      vector_typmod_in: {
+        Args: { "": unknown[] }
+        Returns: number
+      }
     }
     Enums: {
       [_ in never]: never
