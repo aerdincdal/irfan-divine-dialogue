@@ -5,6 +5,7 @@ import { Label } from "@/components/ui/label";
 import { useAuth } from "@/hooks/useAuth";
 import { Loader2 } from "lucide-react";
 import irfanLogo from "@/assets/irfan-logo.png";
+import { FcGoogle } from "react-icons/fc";
 
 interface AuthScreenProps {
   onSuccess: () => void;
@@ -14,7 +15,7 @@ export const AuthScreen = ({ onSuccess }: AuthScreenProps) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isSignUp, setIsSignUp] = useState(false);
-  const { signIn, signUp, loading } = useAuth();
+  const { signIn, signUp, signInWithGoogle, loading } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -25,6 +26,17 @@ export const AuthScreen = ({ onSuccess }: AuthScreenProps) => {
         ? await signUp(email, password)
         : await signIn(email, password);
       
+      if (!error) {
+        onSuccess();
+      }
+    } catch (error) {
+      // Error handling is done in the auth hook
+    }
+  };
+
+  const handleGoogleSignIn = async () => {
+    try {
+      const { error } = await signInWithGoogle();
       if (!error) {
         onSuccess();
       }
@@ -114,6 +126,27 @@ export const AuthScreen = ({ onSuccess }: AuthScreenProps) => {
               {isSignUp ? 'Hesap Oluştur' : 'Giriş Yap'}
             </Button>
           </form>
+
+          {/* Separator */}
+          <div className="relative">
+            <div className="absolute inset-0 flex items-center">
+              <span className="w-full border-t border-glass-border" />
+            </div>
+            <div className="relative flex justify-center text-xs uppercase">
+              <span className="bg-background px-2 text-muted-foreground">veya</span>
+            </div>
+          </div>
+
+          {/* Google Sign In */}
+          <Button
+            onClick={handleGoogleSignIn}
+            disabled={loading}
+            variant="outline"
+            className="w-full h-12 glass-input border-glass-border hover:bg-glass-panel"
+          >
+            <FcGoogle className="w-5 h-5 mr-2" />
+            Google ile Giriş Yap
+          </Button>
 
           <div className="text-center">
             <Button

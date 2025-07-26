@@ -8,7 +8,7 @@ import { Settings } from "@/components/Settings";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/hooks/useAuth";
 import { useDatabase } from "@/hooks/useDatabase";
-import { islamicApiService } from "@/services/islamicApi";
+import { ragService } from "@/services/ragService";
 
 interface Message {
   id: string;
@@ -32,21 +32,20 @@ export default function Chat() {
 
   const generateResponse = async (userMessage: string): Promise<string> => {
     try {
-      if (islamicApiService.isConfigured()) {
-        const result = await islamicApiService.askQuestion({
-          question: userMessage,
-          language: 'tr'
-        });
-        
-        if (result.success && result.data) {
-          return result.data.answer;
-        }
+      if (!user) {
+        return 'Lütfen önce giriş yapınız.';
+      }
+
+      // Use RAG service for religious questions
+      const result = await ragService.askReligiousQuestion(userMessage, user.id, currentSessionId || undefined);
+      
+      if (result.blocked) {
+        return result.response;
       }
       
-      // Fallback to demo response
-      const demoResponse = await islamicApiService.getDemoResponse(userMessage);
-      return demoResponse.answer;
+      return result.response;
     } catch (error) {
+      console.error('Error generating response:', error);
       return 'Üzgünüm, şu anda bir teknik sorun yaşıyoruz. Lütfen daha sonra tekrar deneyin.';
     }
   };
