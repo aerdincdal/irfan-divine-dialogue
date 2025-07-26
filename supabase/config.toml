@@ -1,1 +1,7 @@
 project_id = "yqkbmpyanyeetyjdjxhr"
+
+[functions.religious-chat]
+verify_jwt = true
+
+[functions.process-documents]
+verify_jwt = true
