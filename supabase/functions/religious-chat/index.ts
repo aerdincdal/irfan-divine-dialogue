@@ -58,7 +58,7 @@ async function findRelevantContext(query: string, limit: number = 3) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'text-embedding-ada-002',
+        model: 'nomic-embed-text-v1.5',
         input: query
       })
     });
@@ -159,7 +159,7 @@ serve(async (req) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'llama-3.2-90b-text-preview',
+        model: 'llama-3.3-70b-versatile',
         messages: [
           {
             role: 'system',
