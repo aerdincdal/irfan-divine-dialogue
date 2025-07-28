@@ -23,13 +23,13 @@ export const SplashScreen = ({ onComplete }: SplashScreenProps) => {
   }, [onComplete]);
 
   return (
-    <div className="fixed inset-0 bg-background flex flex-col items-center justify-center overflow-hidden">
+    <div className="flex flex-col items-center justify-center h-screen bg-background mobile-vh safe-top safe-bottom overflow-hidden">
       {/* Subtle geometric background pattern */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute inset-0 bg-gradient-radial from-primary/20 via-transparent to-transparent"></div>
       </div>
 
-      <div className="flex flex-col items-center space-y-8 z-10">
+      <div className="flex flex-col items-center space-y-6 md:space-y-8 z-10 px-6">
         {/* Bismillah Calligraphy */}
         <div className={`transition-all duration-1000 transform ${
           showBismillah 
@@ -39,7 +39,7 @@ export const SplashScreen = ({ onComplete }: SplashScreenProps) => {
           <img 
             src={bismillahCalligraphy}
             alt="Bismillah"
-            className="w-64 h-32 object-contain pulse-glow"
+            className="w-48 h-24 md:w-64 md:h-32 object-contain pulse-glow"
           />
         </div>
 
@@ -69,7 +69,7 @@ export const SplashScreen = ({ onComplete }: SplashScreenProps) => {
       </div>
 
       {/* Loading indicator */}
-      <div className="absolute bottom-20 flex items-center space-x-2">
+      <div className="absolute bottom-16 md:bottom-20 flex items-center space-x-2">
         <div className="w-2 h-2 bg-primary rounded-full animate-bounce"></div>
         <div className="w-2 h-2 bg-primary rounded-full animate-bounce" style={{animationDelay: '0.1s'}}></div>
         <div className="w-2 h-2 bg-primary rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></div>

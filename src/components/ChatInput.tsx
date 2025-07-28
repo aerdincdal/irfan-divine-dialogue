@@ -21,14 +21,14 @@ export const ChatInput = ({ onSendMessage, disabled }: ChatInputProps) => {
   };
 
   return (
-    <div className="sticky bottom-0 left-0 right-0 p-4 glass-panel border-t border-glass-border/50">
+    <div className="sticky bottom-0 left-0 right-0 p-4 glass-panel border-t border-glass-border/50 safe-bottom flex-shrink-0">
       <form onSubmit={handleSubmit} className="flex gap-3 items-end">
         <Textarea
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           placeholder="İslami bir konu hakkında soru sorun..."
           className={cn(
-            "glass-input resize-none min-h-[52px] max-h-32 text-foreground placeholder:text-muted-foreground border-glass-border/30",
+            "glass-input resize-none min-h-[52px] max-h-32 text-foreground placeholder:text-muted-foreground border-glass-border/30 touch-manipulation",
             "focus:border-primary/50 focus:ring-primary/30"
           )}
           disabled={disabled}
@@ -43,7 +43,7 @@ export const ChatInput = ({ onSendMessage, disabled }: ChatInputProps) => {
           type="submit"
           disabled={!message.trim() || disabled}
           className={cn(
-            "glass-button px-4 py-3 h-[52px] shrink-0",
+            "glass-button px-4 py-3 h-[52px] shrink-0 touch-manipulation",
             "disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
           )}
         >

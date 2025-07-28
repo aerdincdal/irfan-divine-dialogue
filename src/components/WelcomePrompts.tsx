@@ -30,36 +30,36 @@ const prompts = [
 
 export const WelcomePrompts = ({ onSelectPrompt }: WelcomePromptsProps) => {
   return (
-    <div className="flex-1 flex flex-col items-center justify-center p-6 space-y-8">
+    <div className="flex-1 flex flex-col items-center justify-center p-6 space-y-8 overflow-y-auto">
       <div className="text-center space-y-4">
-        <h1 className="text-3xl font-bold glow-text">
+        <h1 className="text-2xl md:text-3xl font-bold glow-text">
           İrfan'a Hoş Geldiniz
         </h1>
-        <div className="text-4xl font-arabic text-primary mb-2" dir="rtl">
+        <div className="text-3xl md:text-4xl font-arabic text-primary mb-2" dir="rtl">
           بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ
         </div>
-        <p className="text-muted-foreground text-lg max-w-md">
+        <p className="text-muted-foreground text-base md:text-lg max-w-md">
           İslami bilgiler için yapay zeka destekli rehberiniz
         </p>
       </div>
       
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-2xl">
+      <div className="grid grid-cols-1 gap-4 w-full max-w-sm md:max-w-2xl md:grid-cols-2">
         {prompts.map((prompt, index) => (
           <Button
             key={index}
             variant="outline"
             className={cn(
-              "glass-panel h-auto p-6 text-left justify-start group",
-              "hover:scale-105 transition-all duration-300",
+              "glass-panel h-auto p-4 md:p-6 text-left justify-start group touch-manipulation",
+              "hover:scale-105 active:scale-95 transition-all duration-300",
               "border-glass-border/30 hover:border-primary/50"
             )}
             onClick={() => onSelectPrompt(prompt.prompt)}
           >
             <div className="space-y-2">
-              <h3 className="font-semibold text-foreground group-hover:text-primary transition-colors">
+              <h3 className="font-semibold text-foreground group-hover:text-primary transition-colors text-sm md:text-base">
                 {prompt.title}
               </h3>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-xs md:text-sm text-muted-foreground">
                 {prompt.subtitle}
               </p>
             </div>

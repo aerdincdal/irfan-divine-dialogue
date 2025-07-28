@@ -89,9 +89,9 @@ export const ChatHistory = ({ onBack, onSelectChat }: ChatHistoryProps) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-background flex flex-col">
+    <div className="flex flex-col h-screen bg-background mobile-vh safe-top safe-bottom">
       {/* Header */}
-      <div className="glass-panel border-b border-glass-border/50 p-4">
+      <div className="glass-panel border-b border-glass-border/50 p-4 flex-shrink-0">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <Button

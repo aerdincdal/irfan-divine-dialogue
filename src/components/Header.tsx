@@ -9,7 +9,7 @@ interface HeaderProps {
 
 export const Header = ({ onOpenMenu, onOpenHistory }: HeaderProps) => {
   return (
-    <div className="sticky top-0 left-0 right-0 z-50 glass-panel border-b border-glass-border/50 p-4">
+    <div className="sticky top-0 left-0 right-0 z-50 glass-panel border-b border-glass-border/50 p-4 safe-top flex-shrink-0">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
           <img 
@@ -25,7 +25,7 @@ export const Header = ({ onOpenMenu, onOpenHistory }: HeaderProps) => {
             variant="ghost"
             size="icon"
             onClick={onOpenHistory}
-            className="text-foreground hover:text-primary hover:bg-glass-border/20 rounded-xl"
+            className="text-foreground hover:text-primary hover:bg-glass-border/20 rounded-xl touch-manipulation"
           >
             <History className="w-5 h-5" />
           </Button>
@@ -33,7 +33,7 @@ export const Header = ({ onOpenMenu, onOpenHistory }: HeaderProps) => {
             variant="ghost"
             size="icon"
             onClick={onOpenMenu}
-            className="text-foreground hover:text-primary hover:bg-glass-border/20 rounded-xl"
+            className="text-foreground hover:text-primary hover:bg-glass-border/20 rounded-xl touch-manipulation"
           >
             <Menu className="w-5 h-5" />
           </Button>

@@ -13,13 +13,9 @@ import {
   FileText, 
   LogOut, 
   ExternalLink,
-  Trash2,
-  Database,
-  Crown
+  Trash2
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { useDatabase } from "@/hooks/useDatabase";
-import { DocumentUploader } from "@/components/DocumentUploader";
 import irfanLogo from "@/assets/irfan-logo.png";
 
 interface SettingsProps {
@@ -60,9 +56,9 @@ export const Settings = ({ onBack, onLogout, userProfile }: SettingsProps) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-background flex flex-col">
+    <div className="flex flex-col h-screen bg-background mobile-vh safe-top safe-bottom">
       {/* Header */}
-      <div className="glass-panel border-b border-glass-border/50 p-4">
+      <div className="glass-panel border-b border-glass-border/50 p-4 flex-shrink-0">
         <div className="flex items-center gap-3">
           <Button
             variant="ghost"
@@ -87,14 +83,10 @@ export const Settings = ({ onBack, onLogout, userProfile }: SettingsProps) => {
       <ScrollArea className="flex-1">
         <div className="p-4">
           <Tabs defaultValue="profile" className="space-y-6">
-            <TabsList className="grid w-full grid-cols-3 glass-panel">
+            <TabsList className="grid w-full grid-cols-2 glass-panel">
               <TabsTrigger value="profile" className="flex items-center gap-2">
                 <User className="w-4 h-4" />
                 Profil
-              </TabsTrigger>
-              <TabsTrigger value="documents" className="flex items-center gap-2">
-                <Database className="w-4 h-4" />
-                RAG Yönetimi
               </TabsTrigger>
               <TabsTrigger value="settings" className="flex items-center gap-2">
                 <Shield className="w-4 h-4" />
@@ -168,27 +160,6 @@ export const Settings = ({ onBack, onLogout, userProfile }: SettingsProps) => {
               </div>
             </TabsContent>
 
-            <TabsContent value="documents" className="space-y-6">
-              {/* Document Upload Section */}
-              <div className="space-y-4">
-                <div className="glass-panel p-6">
-                  <div className="flex items-center gap-3 mb-4">
-                    <Crown className="w-5 h-5 text-primary" />
-                    <h2 className="text-lg font-semibold">Admin: RAG Doküman Yönetimi</h2>
-                  </div>
-                  <p className="text-sm text-muted-foreground mb-6">
-                    Bu bölüm sadece admin kullanıcıları için görünür. Dini metinleri sisteme yükleyerek 
-                    RAG veritabanını zenginleştirin.
-                  </p>
-                  <DocumentUploader onSuccess={() => {
-                    toast({
-                      title: "Başarılı",
-                      description: "Doküman RAG sistemine eklendi."
-                    });
-                  }} />
-                </div>
-              </div>
-            </TabsContent>
 
             <TabsContent value="settings" className="space-y-6">
               {/* Feedback Section */}

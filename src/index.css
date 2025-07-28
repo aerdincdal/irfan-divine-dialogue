@@ -243,4 +243,30 @@
     height: 100vh;
     height: -webkit-fill-available;
   }
+  
+  /* Touch optimizations */
+  .touch-manipulation {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  /* Improved mobile scrolling */
+  .mobile-scroll {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+  }
+  
+  /* Mobile keyboard handling */
+  .mobile-keyboard-adjust {
+    resize: none;
+    border-radius: 12px;
+  }
+  
+  /* Prevent mobile text selection on UI elements */
+  .no-select {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
 }
